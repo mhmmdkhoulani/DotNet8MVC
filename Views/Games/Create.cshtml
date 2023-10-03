@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cover" class="form-label mt-4"></label>
-                <input type="file" class="form-control" placeholder="Enter game name" asp-for="Cover" 
+                <input type="file" class="form-control" placeholder="Enter game name" asp-for="Cover" id="Cover" 
                     data-rule-extension="@FileSettings.AllowedExtensions.Replace(".",string.Empty)"
                     data-msg-extension="Not Allowed extension"
                        data-rule-fileSize="@FileSettings.MaxFileSizeInBytes"
@@ -52,7 +52,9 @@
             </div>
             <button type="submit" class="btn btn-light text-balck mt-4">Save</button>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <img alt="Cover" class="cover-preview d-none" />
+        </div>
     </div>
 </form>
 
@@ -63,6 +65,12 @@
         $.validator.addMethod('fileSize', function (value, element, param) {
             var isValid = this.optional(element) || element.files[0].size <= param;
             return isValid;
+        });
+
+        $(document).ready(function () {
+            $('#Cover').on("change", function () {
+                $(".cover-preview").attr("src", window.URL.createObjectURL(this.files[0])).removeClass('d-none');
+            });
         });
     </script>
 }
