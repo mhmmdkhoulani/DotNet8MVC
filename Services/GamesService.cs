@@ -14,6 +14,11 @@ namespace MVCProject.Services
             _webHostEnviroment = webHostEnviroment;
             _imagesPath = $"{_webHostEnviroment.WebRootPath}{FileSettings.ImagePath}";
         }
+        public async Task<IEnumerable<Game>> GetAllAsync()
+        {
+            var games = await _db.Games.Include(g => g.Category).Include(g => g.Devices).ThenInclude(d => d.Device).AsNoTracking().ToListAsync();
+            return games;
+        }
 
         public async Task Create(CreateGameFormViewModel model)
         {
@@ -36,5 +41,7 @@ namespace MVCProject.Services
             await _db.Games.AddAsync(game);
             await _db.SaveChangesAsync();
         }
+
+        
     }
 }
