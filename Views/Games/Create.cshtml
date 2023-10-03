@@ -16,8 +16,9 @@
             <div class="form-group">
                 <label asp-for="CategoryId" class="form-label mt-4"></label>
                 
-                <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
-                    <option value="">Select a category</option>
+                <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories"
+                        data-placeholder="Select a category" data-minimum-results-for-search="Infinity">
+                    <option value=""></option>
                     
                 </select>
 
@@ -27,8 +28,9 @@
             <div class="form-group">
                 <label asp-for="SelectedDevices" class="form-label mt-4"></label>
 
-                <select class="form-select" asp-for="SelectedDevices" asp-items="Model.Devices">
-                    <option>Select devices</option>
+                <select class="form-select" asp-for="SelectedDevices" asp-items="Model.Devices"
+                        data-placeholder="Select devices" data-minimum-results-for-search="Infinity">
+                    <option></option>
 
                 </select>
 
@@ -61,16 +63,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
-        $.validator.addMethod('fileSize', function (value, element, param) {
-            var isValid = this.optional(element) || element.files[0].size <= param;
-            return isValid;
-        });
-
-        $(document).ready(function () {
-            $('#Cover').on("change", function () {
-                $(".cover-preview").attr("src", window.URL.createObjectURL(this.files[0])).removeClass('d-none');
-            });
-        });
-    </script>
+    <script src="~/js/file-validators.js" asp-append-version="true"></script>
+    <script src="~/js/game-form.js" asp-append-version="true"></script>
 }
