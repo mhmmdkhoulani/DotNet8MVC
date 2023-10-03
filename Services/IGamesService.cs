@@ -2,7 +2,9 @@
 {
     public interface IGamesService
     {
-        Task Create(CreateGameFormViewModel model);
         Task<IEnumerable<Game>> GetAllAsync();
+        Task<Game?> GetAsync(int id);
+
+        Task Create(CreateGameFormViewModel model);
     }
 }

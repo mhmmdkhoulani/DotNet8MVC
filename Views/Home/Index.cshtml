@@ -16,7 +16,7 @@ else
         @foreach (var game in Model)
         {
             <div class="col-md-4">
-                <div class="card border-success mb-3" style="max-width: 20rem;">
+                <a class="card border-success mb-3 text-decoration-none" asp-controller="Games" asp-action="Details" asp-route-id="@game.Id">
                    
                     <div class="card-body " style="background-image:url(@($"{FileSettings.ImagePath}/{game.CoverUrl}")); background-size:cover;backgroud-position: center; height: 500px">
                        <div class="d-flex align-items-end h-100">
@@ -33,7 +33,7 @@ else
                             }
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         }
     </div>

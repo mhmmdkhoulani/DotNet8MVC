@@ -19,6 +19,11 @@ namespace MVCProject.Services
             var games = await _db.Games.Include(g => g.Category).Include(g => g.Devices).ThenInclude(d => d.Device).AsNoTracking().ToListAsync();
             return games;
         }
+        public async Task<Game?> GetAsync(int id)
+        {
+            var game = await _db.Games.Include(g => g.Category).Include(g => g.Devices).ThenInclude(d => d.Device).AsNoTracking().SingleOrDefaultAsync(g => g.Id == id);
+            return game;
+        }
 
         public async Task Create(CreateGameFormViewModel model)
         {

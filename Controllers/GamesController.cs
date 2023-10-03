@@ -15,9 +15,21 @@ namespace MVCProject.Controllers
             _gamesService = gamesService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var games = await _gamesService.GetAllAsync();
+            return View(games);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var game = await _gamesService.GetAsync(id);
+            if(game is null)
+            {
+                return NotFound();
+            }
+            return View(game);
         }
 
         [HttpGet]
@@ -48,5 +60,7 @@ namespace MVCProject.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        
     }
 }
