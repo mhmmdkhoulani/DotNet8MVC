@@ -61,6 +61,50 @@ namespace MVCProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var game = await _gamesService.GetAsync(id);
+            if(game is null)
+            {
+                return NotFound();
+            }
+
+            EditGameFormViewModel viewMode = new()
+            {
+                Id = game.Id,
+                Name = game.Name,
+                Categories = _categoriesService.GetSelectList(),
+                Devices = _devicesService.GetSelectList(),
+                CategoryId = game.CategoryId,
+                SelectedDevices = game.Devices.Select(g => g.DeviceId).ToList(),
+                Description = game.Description,
+                CoverUrl = game.CoverUrl,
+            };
+
+            return View(viewMode);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(EditGameFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = _categoriesService.GetSelectList();
+                model.Devices = _devicesService.GetSelectList();
+                return View(model);
+            }
+
+            //Update game to database
+            var game = await _gamesService.UpdateAsync(model);
+            if(game is null)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

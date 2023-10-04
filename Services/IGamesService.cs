@@ -4,6 +4,7 @@
     {
         Task<IEnumerable<Game>> GetAllAsync();
         Task<Game?> GetAsync(int id);
+        Task<Game?> UpdateAsync(EditGameFormViewModel model);
 
         Task Create(CreateGameFormViewModel model);
     }
