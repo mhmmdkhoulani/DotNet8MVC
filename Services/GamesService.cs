@@ -85,7 +85,30 @@ namespace MVCProject.Services
            
             
         }
+      
+        public bool Delete(int id)
+        {
+            var isDeleted = false;
+            var game = _db.Games.Find( id);
 
+            if(game is null)
+                return isDeleted;
+
+             _db.Games.Remove(game);
+            var effectedRows = _db.SaveChanges();
+            if (effectedRows > 0)
+            {
+                var cover = Path.Combine(_imagesPath, game.CoverUrl);
+                File.Delete(cover);
+                isDeleted = true;
+                return isDeleted;
+            }
+            else
+            {
+                return isDeleted;
+            }
+            
+        }
         private async Task<string> SaveCover(IFormFile file)
         {
             var coverName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
@@ -95,5 +118,6 @@ namespace MVCProject.Services
             await file.CopyToAsync(stream);
             return coverName;
         }
+
     }
 }

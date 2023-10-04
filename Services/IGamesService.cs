@@ -7,5 +7,6 @@
         Task<Game?> UpdateAsync(EditGameFormViewModel model);
 
         Task Create(CreateGameFormViewModel model);
+        bool Delete(int id);
     }
 }
